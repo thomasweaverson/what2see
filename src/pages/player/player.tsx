@@ -1,4 +1,9 @@
+import { useParams } from 'react-router-dom';
+
 function Player () {
+  const id = useParams().id;
+  // eslint-disable-next-line no-console
+  console.log(id);
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>

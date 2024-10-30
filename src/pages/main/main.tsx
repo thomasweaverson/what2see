@@ -1,6 +1,9 @@
 import Logo from '../../components/logo/logo';
-import MovieCard from '../../components/movie-card/movie-card';
 import Footer from '../../components/footer/footer';
+
+import type {Film} from '../../types/film';
+import FilmsList from '../../components/films-list/films-list';
+import UserBlock from '../../components/user-block/user-block';
 
 type PromoMovieInfo = {
   title: string;
@@ -10,8 +13,9 @@ type PromoMovieInfo = {
 
 type MainProps = {
   promoMovie: PromoMovieInfo;
+  films: Film[];
 }
-function Main({promoMovie}: MainProps): JSX.Element {
+function Main({promoMovie, films}: MainProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -24,16 +28,7 @@ function Main({promoMovie}: MainProps): JSX.Element {
         <header className="page-header film-card__head">
           <Logo />
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link" href="#/">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
 
         <div className="film-card__wrap">
@@ -105,13 +100,7 @@ function Main({promoMovie}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {Array.from({ length: 20 }).map((_) => <MovieCard key={Math.random()} />)}
-          </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <FilmsList films={films.map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage}))} />
         </section>
 
         <Footer />

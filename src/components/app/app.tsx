@@ -1,10 +1,12 @@
+import type {Film} from '../../types/film';
+
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import PrivateRoute from '../privete-route/private-route';
+import PrivateRoute from '../private-route/private-route';
 
 import Main from '../../pages/main/main';
 import MyList from '../../pages/my-list/my-list';
-import Film from '../../pages/film/film';
+import FilmScreen from '../../pages/film-screen/film-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -18,43 +20,44 @@ type PromoMovieInfo = {
 
 type AppProps = {
   promoMovie: PromoMovieInfo;
+  films: Film[];
 }
 
-function App({promoMovie}: AppProps): JSX.Element {
+function App({promoMovie, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main promoMovie={promoMovie}/>}
+          element={<Main promoMovie={promoMovie} films={films}/>}
         />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList />
+              <MyList films={films.filter((film) => film.isFavorite).map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage}))}/>
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Films}/:id`}
-          element={<Film />}
+          element={<FilmScreen films={films} />}
         />
         <Route
           path={`${AppRoute.Player}/:id`}
-          element={<Player />}
+          element={<Player films={films.map((film) => ({id: film.id, posterImage: film.posterImage, videoLink: film.videoLink}))} />}
         />
         <Route
           path={AppRoute.SignIn}
           element={<SignIn />}
         />
         <Route
-          path={AppRoute.AddReview}
+          path={`films/:id${AppRoute.AddReview}`}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <AddReview />
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <AddReview films={films.map((film) => ({id: film.id, name: film.name, backgroundImage: film.backgroundImage, posterImage: film.posterImage}))}/>
             </PrivateRoute>
           }
         />

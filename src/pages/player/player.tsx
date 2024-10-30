@@ -1,12 +1,24 @@
 import { useParams } from 'react-router-dom';
 
-function Player () {
+import type {Film} from '../../types/film';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+
+type PlayerProps = {
+  films: Pick<Film, 'id' | 'videoLink' | 'posterImage'>[];
+};
+
+function Player ({films}: PlayerProps) {
   const id = useParams().id;
   // eslint-disable-next-line no-console
   console.log(id);
+  const movie = films.find((film) => film.id === Number(id));
+
+  if (!movie) {
+    return <NotFoundScreen/>;
+  }
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={movie.videoLink} className="player__video" poster={movie.posterImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

@@ -1,10 +1,10 @@
 import type {Film} from '../../types/film';
 import {useState} from 'react';
 
-import FilmCard from '../movie-card/movie-card';
+import FilmCard from '../film-card/film-card';
 
 type MoreLikeThisProps = {
-  films: Pick<Film, 'name' | 'id' | 'previewImage'>[];
+  films: Pick<Film, 'name' | 'id' | 'previewImage' | 'previewVideoLink'>[];
 }
 
 function MoreLikeThis({films}: MoreLikeThisProps) {
@@ -30,6 +30,8 @@ function MoreLikeThis({films}: MoreLikeThisProps) {
             id={film.id}
             name={film.name}
             previewImage={film.previewImage}
+            previewVideoLink={film.previewVideoLink}
+            // isPlaying={activeCard === film.id}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           />

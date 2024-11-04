@@ -7,7 +7,7 @@ import type {Film} from '../../types/film';
 import UserBlock from '../../components/user-block/user-block';
 
 type FilmsListProps = {
-  films: Pick<Film, 'id' | 'name' | 'previewImage'>[];
+  films: Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'>[];
 }
 
 function MyList ({films}: FilmsListProps): JSX.Element {

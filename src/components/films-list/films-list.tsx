@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type {Film} from '../../types/film';
 
-import FilmCard from '../movie-card/movie-card';
+import FilmCard from '../film-card/film-card';
 
 type FilmsListProps = {
-  films: Pick<Film, 'id' | 'name' | 'previewImage'>[];
+  films: Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'>[];
 }
 
 function FilmsList({films}: FilmsListProps): JSX.Element {
@@ -29,6 +29,8 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
               id={film.id}
               name={film.name}
               previewImage={film.previewImage}
+              previewVideoLink={film.previewVideoLink}
+              // isPlaying={activeCard === film.id}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             />

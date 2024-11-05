@@ -29,5 +29,7 @@ const splitDescription = (description: string, maxLength = 100): string[] => {
   return paragraphs;
 };
 
-export { shuffle, splitDescription };
+const capitalizeFirstLetter = (string: string): string => string[0].toUpperCase() + string.slice(1);
+
+export { shuffle, splitDescription, capitalizeFirstLetter };
 

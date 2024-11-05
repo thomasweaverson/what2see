@@ -13,9 +13,9 @@ const VideoPlayer = forwardRef<HTMLVideoElement, VideoPlayerProps>(({previewImag
       poster={previewImage}
       muted
       loop
-      width="280"
-      height="175"
       preload="auto"
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      crossOrigin='anonymous'
     />)
 );
 

@@ -3,8 +3,8 @@ import Footer from '../../components/footer/footer';
 
 import type {Film} from '../../types/film';
 import FilmsList from '../../components/films-list/films-list';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import UserBlock from '../../components/user-block/user-block';
-import TestVideoContainer from '../../components/test/test-video-container';
 
 type PromoMovieInfo = {
   title: string;
@@ -102,9 +102,7 @@ function Main({promoMovie, films}: MainProps): JSX.Element {
           </ul>
 
           <FilmsList films={films.map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}))} />
-        </section>
-        <section className="test">
-          <TestVideoContainer />
+          <ShowMoreButton />
         </section>
         <Footer />
       </div>

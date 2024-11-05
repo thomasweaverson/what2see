@@ -1,33 +1,30 @@
 import { useParams, Link} from 'react-router-dom';
-import { useState } from 'react';
+import { AppRoute } from '../../const';
+import { shuffle } from '../../utils/common-utils';
 
 import Logo from '../../components/logo/logo';
-import FilmDetails from '../../components/film-details/film-details';
+import UserBlock from '../../components/user-block/user-block';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import FilmDescription from '../../components/film-description/film-description';
+import MoreLikeThis from '../../components/more-like-this/more-like-this';
 import Footer from '../../components/footer/footer';
 
 import type {Film} from '../../types/film';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
-import MoreLikeThis from '../../components/more-like-this/more-like-this';
-import { shuffle } from '../../utils/common-utils';
-import FilmScreenTabs from '../../components/film-screen-tabs/film-screen-tabs';
-import FilmOverview from '../../components/film-overview/film-overview';
-import UserBlock from '../../components/user-block/user-block';
-import { AppRoute } from '../../const';
 
 function FilmScreen({films}: {films: Film[]}) {
-  const [activeTab, setActiveTab] = useState<string>('overview');
+
   const id = useParams().id;
   // eslint-disable-next-line no-console
   console.log(id);
 
   const movie = films.find((film) => film.id === Number(id));
-
   if (!movie) {
     return <NotFoundScreen/>;
   }
 
   const myListIcon = movie.isFavorite ? {viewBox: '0 0 18 14', width: '18', height: '14', xlinkHref: '#in-list' } : {viewBox: '0 0 19 20', width: '19', height: '20', xlinkHref: '#add' };
 
+  const moreLikeThisFilms = shuffle(films.filter((film) => film.name !== movie.name && film.genre === movie.genre).slice(0, 4));
 
   return (
     <>
@@ -67,7 +64,6 @@ function FilmScreen({films}: {films: Film[]}) {
                   <span>My list</span>
                 </button>
                 <Link to={`${AppRoute.Films}/${movie.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
-                {/* <Link /> ^ */}
               </div>
             </div>
           </div>
@@ -79,32 +75,14 @@ function FilmScreen({films}: {films: Film[]}) {
               <img src={movie.posterImage} alt={movie.name} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <FilmScreenTabs id={movie.id} activeTab={activeTab} setActiveTab={setActiveTab}/>
+            <FilmDescription film={movie}/>
 
-              {activeTab === 'details' ?
-                <FilmDetails
-                  director={movie.director}
-                  starring={movie.starring}
-                  genre={movie.genre}
-                  released={movie.released}
-                  runTime={movie.runTime}
-                /> :
-                <FilmOverview
-                  rating={movie.rating}
-                  scoresCount={movie.scoresCount}
-                  description={movie.description}
-                  director={movie.director}
-                  starring={movie.starring}
-                />}
-
-            </div>
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <MoreLikeThis films={shuffle(films.filter((film) => film.name !== movie.name)).slice(0, 4)} />
+        <MoreLikeThis films={moreLikeThisFilms} />
         <Footer />
       </div>
     </>

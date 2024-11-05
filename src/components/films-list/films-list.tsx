@@ -20,27 +20,20 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
     setActiveCard(null);
   };
   return (
-    <>
-      <div className="catalog__films-list">
-        {films.map((film) =>
-          (
-            <FilmCard
-              key={film.id}
-              id={film.id}
-              name={film.name}
-              previewImage={film.previewImage}
-              previewVideoLink={film.previewVideoLink}
-              // isPlaying={activeCard === film.id}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            />
-          ))}
-      </div>
-
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
-    </>
+    <div className="catalog__films-list">
+      {films.map((film) =>
+        (
+          <FilmCard
+            key={film.id}
+            id={film.id}
+            name={film.name}
+            previewImage={film.previewImage}
+            previewVideoLink={film.previewVideoLink}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+        ))}
+    </div>
   );
 }
 

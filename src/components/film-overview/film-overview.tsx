@@ -1,4 +1,4 @@
-import type { Film } from '../../types/film';
+import type { Film } from '../../types/types';
 
 import { splitDescription } from '../../utils/common-utils';
 import { formatStarringArrayToString, getRatingDescription } from '../../utils/film-utils';

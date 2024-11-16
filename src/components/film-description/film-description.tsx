@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type {Film} from '../../types/film';
+import type {Film} from '../../types/types';
 import FilmScreenTabs from '../film-screen-tabs/film-screen-tabs';
 import FilmDetails from '../film-details/film-details';
 import FilmOverview from '../film-overview/film-overview';

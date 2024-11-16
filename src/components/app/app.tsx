@@ -1,5 +1,3 @@
-import type {Film} from '../../types/film';
-
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from '../private-route/private-route';
@@ -20,16 +18,15 @@ type PromoMovieInfo = {
 
 type AppProps = {
   promoMovie: PromoMovieInfo;
-  films: Film[];
 }
 
-function App({promoMovie, films}: AppProps): JSX.Element {
+function App({promoMovie}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main promoMovie={promoMovie} films={films}/>}
+          element={<Main promoMovie={promoMovie} />}
         />
         <Route
           path={AppRoute.MyList}
@@ -37,17 +34,17 @@ function App({promoMovie, films}: AppProps): JSX.Element {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <MyList films={films.filter((film) => film.isFavorite).map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}))}/>
+              <MyList />
             </PrivateRoute>
           }
         />
         <Route
           path={`${AppRoute.Films}/:id`}
-          element={<FilmScreen films={films} />}
+          element={<FilmScreen />}
         />
         <Route
           path={`${AppRoute.Player}/:id`}
-          element={<Player films={films.map((film) => ({id: film.id, posterImage: film.posterImage, videoLink: film.videoLink}))} />}
+          element={<Player />}
         />
         <Route
           path={AppRoute.SignIn}
@@ -57,7 +54,7 @@ function App({promoMovie, films}: AppProps): JSX.Element {
           path={`films/:id${AppRoute.AddReview}`}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <AddReview films={films.map((film) => ({id: film.id, name: film.name, backgroundImage: film.backgroundImage, posterImage: film.posterImage}))}/>
+              <AddReview />
             </PrivateRoute>
           }
         />

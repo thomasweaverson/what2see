@@ -9,9 +9,10 @@ import FilmDescription from '../../components/film-description/film-description'
 import MoreLikeThis from '../../components/more-like-this/more-like-this';
 import Footer from '../../components/footer/footer';
 
-import type {Film} from '../../types/film';
+import { useAppSelector } from '../../hooks';
 
-function FilmScreen({films}: {films: Film[]}) {
+function FilmScreen() {
+  const films = useAppSelector((state) => state.films);
 
   const id = useParams().id;
   // eslint-disable-next-line no-console

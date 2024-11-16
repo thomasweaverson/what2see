@@ -1,16 +1,13 @@
 import { useParams } from 'react-router-dom';
 
-import type {Film} from '../../types/film';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { useAppSelector } from '../../hooks';
 
-type PlayerProps = {
-  films: Pick<Film, 'id' | 'videoLink' | 'posterImage'>[];
-};
 
-function Player ({films}: PlayerProps) {
+// передавалось через пропсы films={films.map((film) => ({id: film.id, posterImage: film.posterImage, videoLink: film.videoLink}))}
+function Player () {
+  const films = useAppSelector((state) => state.films);
   const id = useParams().id;
-  // eslint-disable-next-line no-console
-  console.log(id);
   const movie = films.find((film) => film.id === Number(id));
 
   if (!movie) {

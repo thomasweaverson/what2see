@@ -1,4 +1,4 @@
-import type { Film } from '../types/film';
+import type { Film } from '../types/types';
 
 const FILMS: Film[] = [
   {
@@ -187,4 +187,4 @@ const FILMS: Film[] = [
   }
 ];
 
-export default FILMS;
+export { FILMS };

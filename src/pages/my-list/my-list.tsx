@@ -3,14 +3,13 @@ import Footer from '../../components/footer/footer';
 
 import FilmsList from '../../components/films-list/films-list';
 
-import type {Film} from '../../types/film';
+
 import UserBlock from '../../components/user-block/user-block';
+import { useAppSelector } from '../../hooks';
 
-type FilmsListProps = {
-  films: Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'>[];
-}
-
-function MyList ({films}: FilmsListProps): JSX.Element {
+function MyList (): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const favoriteFilms = films.filter((film) => film.isFavorite).map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}));
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -24,7 +23,7 @@ function MyList ({films}: FilmsListProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList films={films} />
+        <FilmsList films={favoriteFilms} />
       </section>
 
       <Footer />

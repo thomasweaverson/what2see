@@ -1,4 +1,4 @@
-import type {Film} from '../../types/film';
+import type {Film} from '../../types/types';
 
 import {humanizeRunTime} from '../../utils/film-utils';
 import StarringList from '../starring-list/starring-list';

@@ -1,4 +1,4 @@
-import type {Film} from '../../types/film';
+import type {Film} from '../../types/types';
 
 import FilmsList from '../films-list/films-list';
 

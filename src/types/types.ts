@@ -1,4 +1,4 @@
-export type Film = {
+type Film = {
   id: number;
   name: string;
   posterImage: string;
@@ -17,3 +17,5 @@ export type Film = {
   videoLink: string;
   previewVideoLink: string;
 };
+
+export type { Film };

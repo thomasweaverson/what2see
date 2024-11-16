@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import VideoPlayer from '../video-player/video-player';
-import type {Film} from '../../types/film';
+import type {Film} from '../../types/types';
 
 type FilmCardProps = Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'> & {
   onMouseEnter: (id: number) => void;

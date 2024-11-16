@@ -1,16 +1,18 @@
 import { useParams } from 'react-router-dom';
 
 import Logo from '../../components/logo/logo';
-import type {Film} from '../../types/film';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-block/user-block';
+import { useAppSelector } from '../../hooks';
 
-type AddReviewProps = {
-  films: Pick<Film, 'id' | 'name' | 'backgroundImage' | 'posterImage'>[];
-}
+// type AddReviewProps = {
+//   films: Pick<Film, 'id' | 'name' | 'backgroundImage' | 'posterImage'>[];
+// }
 
-function AddReview({films}: AddReviewProps): JSX.Element {
+// передавалось через пропсы films={films.map((film) => ({id: film.id, name: film.name, backgroundImage: film.backgroundImage, posterImage: film.posterImage}))}
+function AddReview(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   const {id} = useParams();
   const movie = films.find((film) => film.id === Number(id));
 

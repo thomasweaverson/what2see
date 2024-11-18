@@ -4,8 +4,8 @@ import VideoPlayer from '../video-player/video-player';
 import type {Film} from '../../types/types';
 
 type FilmCardProps = Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'> & {
-  onMouseEnter: (id: number) => void;
-  onMouseLeave: () => void;
+  onMouseEnter?: (id: number) => void;
+  onMouseLeave?: () => void;
 };
 
 function FilmCard({id, name, previewImage, previewVideoLink, onMouseEnter, onMouseLeave}: FilmCardProps): JSX.Element {
@@ -13,12 +13,12 @@ function FilmCard({id, name, previewImage, previewVideoLink, onMouseEnter, onMou
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    onMouseEnter(id);
+    onMouseEnter?.(id);
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    onMouseLeave();
+    onMouseLeave?.();
     setIsHovered(false);
     if (videoRef.current) {
       videoRef.current.pause();

@@ -6,9 +6,13 @@ import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import UserBlock from '../../components/user-block/user-block';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { filterFilmsByGenre, getGenres } from '../../utils/filter-utils';
+import { SHOWING_FILMS_PER_STEP } from '../../const';
+import { useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
+import { resetShowingFilmsStep, setGenre } from '../../store/action';
 
 type PromoMovieInfo = {
   title: string;
@@ -20,10 +24,27 @@ type MainProps = {
   promoMovie: PromoMovieInfo;
 }
 function Main({promoMovie}: MainProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const films: Film[] = useAppSelector((state) => state.films);
+  const showingFilmsStep = useAppSelector((state) => state.showingFilmsStep);
   const genre = useAppSelector((state) => state.genre);
-  const filteredFilms = filterFilmsByGenre(films, genre);
+
+  const location = useLocation();
+
+  const filteredFilms = useMemo(() => filterFilmsByGenre(films, genre), [films, genre]);
+
+  const showingFilms = useMemo(() => filteredFilms.slice(0, showingFilmsStep * SHOWING_FILMS_PER_STEP), [filteredFilms, showingFilmsStep]);
+
+  const isAllFilmsShowing = useMemo(() => (showingFilmsStep * SHOWING_FILMS_PER_STEP >= filteredFilms.length), [showingFilmsStep, filteredFilms.length]);
+
   const genres = getGenres(films);
+
+  useEffect(() => {
+    dispatch(resetShowingFilmsStep());
+    dispatch(setGenre('All genres'));
+  }, [dispatch, location.pathname]);
+
   return (
     <>
       <section className="film-card">
@@ -77,8 +98,8 @@ function Main({promoMovie}: MainProps): JSX.Element {
 
           <GenresList genres={genres} />
 
-          <FilmsList films={filteredFilms.map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}))} />
-          <ShowMoreButton />
+          <FilmsList films={showingFilms.map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}))} />
+          {!isAllFilmsShowing && <ShowMoreButton />}
         </section>
         <Footer />
       </div>

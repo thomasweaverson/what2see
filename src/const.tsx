@@ -13,4 +13,6 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export {AppRoute, AuthorizationStatus};
+const SHOWING_FILMS_PER_STEP = 8;
+
+export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP};

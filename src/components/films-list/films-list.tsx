@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import type {Film} from '../../types/types';
 
 import FilmCard from '../film-card/film-card';
@@ -8,17 +8,19 @@ type FilmsListProps = {
 }
 
 function FilmsList({films}: FilmsListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-  // eslint-disable-next-line no-console
-  console.log(activeCard);
+  // const [activeCard, setActiveCard] = useState<number | null>(null);
+  // // eslint-disable-next-line no-console
+  // console.log(activeCard);
 
-  const handleMouseEnter = (id: number) => {
-    setActiveCard(id);
-  };
+  // const handleMouseEnter = (id: number) => {
+  //   setActiveCard(id);
+  // };
 
-  const handleMouseLeave = () => {
-    setActiveCard(null);
-  };
+  // const handleMouseLeave = () => {
+  //   setActiveCard(null);
+  // };
+
+
   return (
     <div className="catalog__films-list">
       {films.map((film) =>
@@ -29,8 +31,8 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
             name={film.name}
             previewImage={film.previewImage}
             previewVideoLink={film.previewVideoLink}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            // onMouseEnter={handleMouseEnter}
+            // onMouseLeave={handleMouseLeave}
           />
         ))}
     </div>

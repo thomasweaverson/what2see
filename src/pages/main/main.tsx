@@ -1,7 +1,6 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 
-import type {Film} from '../../types/types';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
@@ -26,9 +25,7 @@ type MainProps = {
 function Main({promoMovie}: MainProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const films: Film[] = useAppSelector((state) => state.films);
-  const showingFilmsStep = useAppSelector((state) => state.showingFilmsStep);
-  const genre = useAppSelector((state) => state.genre);
+  const {isFilmsLoadingStatus, genre, showingFilmsStep, films} = useAppSelector((state) => state);
 
   const location = useLocation();
 
@@ -99,7 +96,7 @@ function Main({promoMovie}: MainProps): JSX.Element {
           <GenresList genres={genres} />
 
           <FilmsList films={showingFilms.map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}))} />
-          {!isAllFilmsShowing && <ShowMoreButton />}
+          {!isFilmsLoadingStatus && !isAllFilmsShowing && <ShowMoreButton />}
         </section>
         <Footer />
       </div>

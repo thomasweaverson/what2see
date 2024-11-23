@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
 import { Provider } from 'react-redux';
 
 import {store} from './store';
+import { fetchFilmsAction } from './store/api-actions'; // checkAuthAction
+
+import App from './components/app/app';
+
+
+store.dispatch(fetchFilmsAction());
 
 const promoMovie = {
   title: 'The Grand Budapest Hotel',

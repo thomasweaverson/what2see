@@ -15,4 +15,11 @@ enum AuthorizationStatus {
 
 const SHOWING_FILMS_PER_STEP = 8;
 
+export enum APIRoute {
+  Films = '/films',
+  // Login = '/login',
+  // Logout = '/logout',
+  // Favorites = '/favorites',
+}
+
 export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP};

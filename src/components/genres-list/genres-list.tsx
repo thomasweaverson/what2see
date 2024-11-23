@@ -6,15 +6,17 @@ type GenresListProps = {
 }
 
 function GenresList({genres}: GenresListProps): JSX.Element {
+  const currentGenre = useAppSelector((state) => state.genre);
   const dispatch = useAppDispatch();
 
   const handleGenreClick = (event: React.MouseEvent<HTMLLIElement>, genre: string) => {
     event.preventDefault();
-    dispatch(setGenre(genre));
-    dispatch(resetShowingFilmsStep());
+    if (genre !== currentGenre) {
+      dispatch(setGenre(genre));
+      dispatch(resetShowingFilmsStep());
+    }
   };
 
-  const currentGenre = useAppSelector((state) => state.genre);
 
   return (
     <ul className="catalog__genres-list">

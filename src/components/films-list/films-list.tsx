@@ -1,7 +1,9 @@
 // import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
 import type {Film} from '../../types/types';
 
 import FilmCard from '../film-card/film-card';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type FilmsListProps = {
   films: Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'>[];
@@ -19,7 +21,15 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
   // const handleMouseLeave = () => {
   //   setActiveCard(null);
   // };
+  const {isFilmsLoadingStatus} = useAppSelector((state) => state);
 
+  if (isFilmsLoadingStatus) {
+    return (
+      <div className="catalog__films-list">
+        <LoadingScreen />
+      </div>
+    );
+  }
 
   return (
     <div className="catalog__films-list">

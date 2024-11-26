@@ -1,10 +1,8 @@
-import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { filterFilmsByGenre, getGenres } from '../../utils/filter-utils';
@@ -12,6 +10,7 @@ import { SHOWING_FILMS_PER_STEP } from '../../const';
 import { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { resetShowingFilmsStep, setGenre } from '../../store/action';
+import Header from '../../components/header/header';
 
 type PromoMovieInfo = {
   title: string;
@@ -51,11 +50,7 @@ function Main({promoMovie}: MainProps): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <Logo />
-
-          <UserBlock />
-        </header>
+        <Header />
 
         <div className="film-card__wrap">
           <div className="film-card__info">

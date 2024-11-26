@@ -21,7 +21,7 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
   // const handleMouseLeave = () => {
   //   setActiveCard(null);
   // };
-  const {isFilmsLoadingStatus} = useAppSelector((state) => state);
+  const {isFilmsLoadingStatus} = useAppSelector((state) => state);//@thws точно это тут д.б.?
 
   if (isFilmsLoadingStatus) {
     return (

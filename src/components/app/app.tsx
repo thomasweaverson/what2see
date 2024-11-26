@@ -1,5 +1,5 @@
-import {Route, Routes, BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
 import Main from '../../pages/main/main';
@@ -31,9 +31,7 @@ function App({promoMovie}: AppProps): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <MyList />
             </PrivateRoute>
           }
@@ -53,7 +51,7 @@ function App({promoMovie}: AppProps): JSX.Element {
         <Route
           path={`films/:id${AppRoute.AddReview}`}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute>
               <AddReview />
             </PrivateRoute>
           }

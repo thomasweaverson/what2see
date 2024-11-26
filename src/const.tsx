@@ -15,11 +15,13 @@ enum AuthorizationStatus {
 
 const SHOWING_FILMS_PER_STEP = 8;
 
-export enum APIRoute {
+const TIMEOUT_SHOW_ERROR = 5000;
+
+enum APIRoute {
   Films = '/films',
-  // Login = '/login',
-  // Logout = '/logout',
+  Login = '/login',
+  Logout = '/logout',
   // Favorites = '/favorites',
 }
 
-export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP};
+export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP, TIMEOUT_SHOW_ERROR, APIRoute};

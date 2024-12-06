@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import type { MouseEvent } from 'react';
 type FilmScreenTabsProps = {
   id: number;
@@ -15,6 +13,7 @@ function FilmScreenTabs({id, activeTab, setActiveTab}: FilmScreenTabsProps) {
 
   const overviewTabClass = activeTab === 'overview' ? 'film-nav__item film-nav__item--active' : 'film-nav__item';
   const detailsTabClass = activeTab === 'details' ? 'film-nav__item film-nav__item--active' : 'film-nav__item';
+  const reviewsTabClass = activeTab === 'reviews' ? 'film-nav__item film-nav__item--active' : 'film-nav__item';
 
   return (
     <nav className="film-nav film-card__nav">
@@ -25,8 +24,8 @@ function FilmScreenTabs({id, activeTab, setActiveTab}: FilmScreenTabsProps) {
         <li className={detailsTabClass}>
           <a href="#/" className="film-nav__link" onClick={onTabClick('details')}>Details</a>
         </li>
-        <li className="film-nav__item">
-          <Link to={`/films/${id}${AppRoute.AddReview}`} className="film-nav__link">Reviews</Link>
+        <li className={reviewsTabClass}>
+          <a href="#/" className="film-nav__link" onClick={onTabClick('reviews')}>Reviews</a>
         </li>
       </ul>
     </nav>

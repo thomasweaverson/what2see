@@ -1,5 +1,5 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Route, Routes } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import PrivateRoute from '../private-route/private-route';
 
 import Main from '../../pages/main/main';
@@ -9,6 +9,9 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import AddReview from '../../pages/add-review/add-review';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import { useAppSelector } from '../../hooks';
 
 type PromoMovieInfo = {
   title: string;
@@ -21,8 +24,10 @@ type AppProps = {
 }
 
 function App({promoMovie}: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -46,7 +51,7 @@ function App({promoMovie}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.SignIn}
-          element={<SignIn />}
+          element={isAuthorized ? <Main promoMovie={promoMovie} /> : <SignIn />}
         />
         <Route
           path={`films/:id${AppRoute.AddReview}`}
@@ -58,7 +63,7 @@ function App({promoMovie}: AppProps): JSX.Element {
         />
         <Route path="*" element={<NotFoundScreen />} />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
 
   );
 }

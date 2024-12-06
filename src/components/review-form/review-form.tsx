@@ -1,9 +1,18 @@
 import { useState, Fragment } from 'react';
 import type {ChangeEvent} from 'react';
+import { sendReviewAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 function ReviewForm(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const currentMovieId = useAppSelector((state) => state.currentFilm?.id);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(event.target.value));
@@ -13,19 +22,24 @@ function ReviewForm(): JSX.Element {
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log({
-      rating,
-      comment,
-    });
+    if (!isSubmitDisabled && !isSubmitting) {
+      setIsSubmitting(true);
+      const isSentSuccesfully = await dispatch(sendReviewAction({comment, rating, filmId: currentMovieId})).unwrap();
+      if (isSentSuccesfully) {
+        setComment('');
+        setRating(null);
+        navigate(`${AppRoute.Films}/${currentMovieId}`);
+      }
+      setIsSubmitting(false);
+    }
   };
 
-  const isSubmitDisabled = rating === null || comment.length < 50;
+  const isSubmitDisabled = rating === null || comment.length < 50 || comment.length > 400 || !currentMovieId;
 
   return (
-    <form action="#" className="add-review__form" onSubmit={handleSubmit}>
+    <form action="#" className="add-review__form" onSubmit={(event) => {void handleSubmit(event);}}>
       <div className="rating">
         <div className="rating__stars">
           {[10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map((star) => (

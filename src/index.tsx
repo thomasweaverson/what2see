@@ -6,6 +6,7 @@ import {store} from './store';
 import { checkAuthAction, fetchFilmsAction } from './store/api-actions'; // checkAuthAction
 
 import App from './components/app/app';
+import ErrorMessage from './components/error-messagge/error-message';
 
 
 store.dispatch(fetchFilmsAction());
@@ -24,6 +25,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App promoMovie={promoMovie} />
     </Provider>
   </React.StrictMode>,

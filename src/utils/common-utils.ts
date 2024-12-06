@@ -31,5 +31,20 @@ const splitDescription = (description: string, maxLength = 100): string[] => {
 
 const capitalizeFirstLetter = (string: string): string => string[0].toUpperCase() + string.slice(1);
 
-export { shuffle, splitDescription, capitalizeFirstLetter };
+const formatDate = (isoDate: string): { dateTime: string; displayDate: string } => {
+  const date = new Date(isoDate);
+
+  const dateTime = date.toISOString().split('T')[0];
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const displayDate = date.toLocaleDateString('en-US', options);
+
+  return { dateTime, displayDate };
+};
+
+export { shuffle, splitDescription, capitalizeFirstLetter, formatDate };
 

@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import type {Film} from '../../types/types';
 
 import FilmCard from '../film-card/film-card';
-import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loader/loader';
 
 type FilmsListProps = {
   films: Pick<Film, 'id' | 'name' | 'previewImage' | 'previewVideoLink'>[];

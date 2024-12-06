@@ -5,6 +5,7 @@ enum AppRoute {
   Player = '/player',
   SignIn = '/login',
   AddReview = '/review',
+  NotFound = '*',
 }
 
 enum AuthorizationStatus {
@@ -21,6 +22,7 @@ enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
   // Favorites = '/favorites',
 }
 

@@ -1,14 +1,16 @@
 import {useState} from 'react';
-import type {Film} from '../../types/types';
+import type {Film, Review} from '../../types/types';
 import FilmScreenTabs from '../film-screen-tabs/film-screen-tabs';
 import FilmDetails from '../film-details/film-details';
 import FilmOverview from '../film-overview/film-overview';
+import Reviews from '../Reviews/reviews';
 
 type FilmDescriptionProps = {
   film: Film;
+  reviews: Review[];
 };
 
-function FilmDescription( {film}: FilmDescriptionProps): JSX.Element {
+function FilmDescription( {film, reviews}: FilmDescriptionProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<string>('overview');
   return (
     <div className="film-card__desc">
@@ -30,6 +32,11 @@ function FilmDescription( {film}: FilmDescriptionProps): JSX.Element {
           description={film.description}
           director={film.director}
           starring={film.starring}
+        />}
+
+      {activeTab === 'reviews' &&
+        <Reviews
+          reviews={reviews}
         />}
 
     </div>

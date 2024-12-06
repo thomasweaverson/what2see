@@ -3,6 +3,7 @@ import Footer from '../../components/footer/footer';
 import SignInForm from '../../components/sign-in-form/sign-in-form';
 
 function SignIn() {
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

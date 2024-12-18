@@ -1,14 +1,14 @@
 import { useAppSelector } from '../../hooks';
+import { getCurrentFilm } from '../../store/app-data/selectors';
 import type {Film} from '../../types/types';
-
 import FilmsList from '../films-list/films-list';
 
 type MoreLikeThisProps = {
-  films: Pick<Film, 'name' | 'id' | 'previewImage' | 'previewVideoLink'>[];
+  films: Film[];
 }
 
 function MoreLikeThis({films}: MoreLikeThisProps) {
-  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const currentFilm = useAppSelector(getCurrentFilm);
   const filteredFilms = currentFilm !== null ? films.filter((film) => film.name !== currentFilm.name) : films;
 
   return (

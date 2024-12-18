@@ -2,20 +2,29 @@ import { useParams } from 'react-router-dom';
 
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import store from '../../store';
+import { fetchFilm } from '../../store/action';
+import { getCurrentFilm } from '../../store/app-data/selectors';
+import { resetCurrentFilm } from '../../store/app-data/app-data';
 
-
-// передавалось через пропсы films={films.map((film) => ({id: film.id, posterImage: film.posterImage, videoLink: film.videoLink}))}
 function Player () {
-  const films = useAppSelector((state) => state.films);
-  const id = useParams().id;
-  const movie = films.find((film) => film.id === Number(id));
+  const id = Number(useParams().id);
+  const film = useAppSelector(getCurrentFilm);
 
-  if (!movie) {
+  useEffect(() => {
+    store.dispatch(fetchFilm(id));
+    return () => {
+      store.dispatch(resetCurrentFilm());
+    };
+  }, [id]);
+
+  if (!film) {
     return <NotFoundScreen/>;
   }
   return (
     <div className="player">
-      <video src={movie.videoLink} className="player__video" poster={movie.posterImage}></video>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

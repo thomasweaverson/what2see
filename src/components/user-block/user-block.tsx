@@ -2,18 +2,26 @@ import {useNavigate} from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { logout } from '../../store/action';
+import { getAuthorizationStatus, getUserInfo } from '../../store/user-process/selectors';
+import { useEffect } from 'react';
 
 function UserBlock(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userInfo = useAppSelector((state) => state.userInfo);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userInfo = useAppSelector(getUserInfo);
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('Header рендерится');
+  });
+
 
   const handleSignInOutClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    //@thws vVv эт неправильно
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(logoutAction());
+      dispatch(logout());
       setTimeout(() => navigate(AppRoute.Main), 50);
     } else {
       navigate(AppRoute.SignIn);
@@ -23,6 +31,7 @@ function UserBlock(): JSX.Element {
   const handleAvatarClick = () => {
     navigate(AppRoute.MyList);
   };
+
   return (
     <ul className="user-block">
 

@@ -1,5 +1,5 @@
-import { increaseShowingFilmsStep } from '../../store/action';
 import { useAppDispatch } from '../../hooks';
+import { increaseShowingFilmsStep } from '../../store/app-process/app-process';
 
 function ShowMoreButton(): JSX.Element {
   const dispatch = useAppDispatch();

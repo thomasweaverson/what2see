@@ -2,20 +2,17 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
+import { getCurrentFilm } from '../../store/app-data/selectors';
 
-// type AddReviewProps = {
-//   films: Pick<Film, 'id' | 'name' | 'backgroundImage' | 'posterImage'>[];
-// }
-
-// передавалось через пропсы films={films.map((film) => ({id: film.id, name: film.name, backgroundImage: film.backgroundImage, posterImage: film.posterImage}))}
 function AddReview(): JSX.Element {
 
-  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const currentFilm = useAppSelector(getCurrentFilm);
 
   if (!currentFilm) {
     return <NotFoundScreen/>;
   }
-
+  // eslint-disable-next-line
+  console.log('AddReview рендерится');
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">

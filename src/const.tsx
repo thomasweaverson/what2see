@@ -26,4 +26,14 @@ enum APIRoute {
   // Favorites = '/favorites',
 }
 
-export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP, TIMEOUT_SHOW_ERROR, APIRoute};
+enum NameSpace {
+  AppData = 'APP_DATA',
+  AppProcess = 'APP_PROCESS',
+  UserProcess = 'USER_PROCESS',
+}
+
+enum HttpCode {
+  NotFound = 404
+}
+
+export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP, TIMEOUT_SHOW_ERROR, APIRoute, NameSpace, HttpCode};

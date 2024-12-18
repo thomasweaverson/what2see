@@ -1,9 +1,9 @@
 import { useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
 import type { AuthData } from '../../types/auth-data';
 import { AppRoute } from '../../const';
+import { login } from '../../store/action';
 
 function SignInForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ function SignInForm(): JSX.Element {
         email: loginRef.current.value,
         password: passwordRef.current.value,
       };
-      dispatch(loginAction(authData));
+      dispatch(login(authData));
       navigate(AppRoute.Main);
     }
   };

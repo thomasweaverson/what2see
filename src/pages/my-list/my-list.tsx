@@ -1,16 +1,15 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 
-import FilmsList from '../../components/films-list/films-list';
-
-
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
+import { getFilms } from '../../store/app-data/selectors';
+import FilmsList from '../../components/films-list/films-list';
 
 function MyList (): JSX.Element {
-  const films = useAppSelector((state) => state.films);
-  const favoriteFilms = films.filter((film) => film.isFavorite).map((film) => ({id: film.id, name: film.name, previewImage: film.previewImage, previewVideoLink: film.previewVideoLink}));
+  const films = useAppSelector(getFilms);
+  const favoriteFilms = films.filter((film) => film.isFavorite);
   const isNoFilms = favoriteFilms.length === 0;
   return (
     <div className="user-page">

@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetShowingFilmsStep, setGenre } from '../../store/action';
+import { getGenres } from '../../store/app-data/selectors';
+import { resetShowingFilmsStep, setGenre } from '../../store/app-process/app-process';
+import { getGenre } from '../../store/app-process/selectors';
 
-type GenresListProps = {
-  genres: string[];
-}
-
-function GenresList({genres}: GenresListProps): JSX.Element {
-  const currentGenre = useAppSelector((state) => state.genre);
+function GenresList(): JSX.Element {
+  const genres = useAppSelector(getGenres);
+  const currentGenre = useAppSelector(getGenre);
   const dispatch = useAppDispatch();
 
   const handleGenreClick = (event: React.MouseEvent<HTMLLIElement>, genre: string) => {

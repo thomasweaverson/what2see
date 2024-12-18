@@ -9,25 +9,27 @@ import Footer from '../../components/footer/footer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader/loader';
 import { useEffect } from 'react';
-import { fetchFilmAction, fetchReviewsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import Header from '../../components/header/header';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getCurrentFilm, getReviews, getSimilarFilms } from '../../store/app-data/selectors';
+import { fetchFilm, fetchReviews, fetchSimilarFilms } from '../../store/action';
 
 function FilmScreen() {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const id = Number(useParams().id);
 
-  const film = useAppSelector((state) => state.currentFilm);
-  const similarMovies = useAppSelector((state) => state.similarFilms);
-  const reviews = useAppSelector((state) => state.reviews);
+  const film = useAppSelector(getCurrentFilm);
+  const similarMovies = useAppSelector(getSimilarFilms);
+  const reviews = useAppSelector(getReviews);
 
   const myListIcon = film?.isFavorite ? {viewBox: '0 0 18 14', width: '18', height: '14', xlinkHref: '#in-list' } : {viewBox: '0 0 19 20', width: '19', height: '20', xlinkHref: '#add' };
 
   useEffect(() => {
-    dispatch(fetchFilmAction(id));
-    dispatch(fetchSimilarFilmsAction(id));
-    dispatch(fetchReviewsAction(id));
+    dispatch(fetchFilm(id));
+    dispatch(fetchSimilarFilms(id));
+    dispatch(fetchReviews(id));
   }, [dispatch, id]);
 
   return (

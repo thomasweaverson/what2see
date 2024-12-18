@@ -1,9 +1,10 @@
 import { useState, Fragment } from 'react';
 import type {ChangeEvent} from 'react';
-import { sendReviewAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { getCurrentFilm } from '../../store/app-data/selectors';
+import { sendReview } from '../../store/action';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,7 +13,7 @@ function ReviewForm(): JSX.Element {
   const [comment, setComment] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const currentMovieId = useAppSelector((state) => state.currentFilm?.id);
+  const currentMovieId = useAppSelector(getCurrentFilm)?.id;
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(event.target.value));
@@ -26,7 +27,7 @@ function ReviewForm(): JSX.Element {
     event.preventDefault();
     if (!isSubmitDisabled && !isSubmitting) {
       setIsSubmitting(true);
-      const isSentSuccesfully = await dispatch(sendReviewAction({comment, rating, filmId: currentMovieId})).unwrap();
+      const isSentSuccesfully = await dispatch(sendReview({comment, rating, filmId: currentMovieId})).unwrap();
       if (isSentSuccesfully) {
         setComment('');
         setRating(null);

@@ -12,6 +12,7 @@ import AddReview from '../../pages/add-review/add-review';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type PromoMovieInfo = {
   title: string;
@@ -24,7 +25,7 @@ type AppProps = {
 }
 
 function App({promoMovie}: AppProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   return (
     <HistoryRouter history={browserHistory}>

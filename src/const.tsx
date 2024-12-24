@@ -23,7 +23,8 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
-  // Favorites = '/favorites',
+  Promo = '/promo',
+  Favorite = '/favorite',
 }
 
 enum NameSpace {
@@ -33,7 +34,32 @@ enum NameSpace {
 }
 
 enum HttpCode {
-  NotFound = 404
+  NotFound = 404,
+  NoAuth = 401
 }
 
-export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP, TIMEOUT_SHOW_ERROR, APIRoute, NameSpace, HttpCode};
+const DEFAULT_PROMO_FILM = {
+
+  'id': 1,
+  'name': 'The Grand Budapest Hotel',
+  'posterImage': 'img/the-grand-budapest-hotel-poster.jpg',
+  'previewImage': 'img/the-grand-budapest-hotel.jpg',
+  'backgroundImage': 'img/the-grand-budapest-hotel-bg.jpg',
+  'backgroundColor': '#ffffff',
+  'videoLink': 'https://some-link',
+  'previewVideoLink': 'https://some-link',
+  'description': 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave\'s friend and protege.',
+  'rating': 8.9,
+  'scoresCount': 240,
+  'director': 'Wes Anderson',
+  'starring': [
+    'Bill Murray'
+  ],
+  'runTime': 99,
+  'genre': 'Comedy',
+  'released': 2014,
+  'isFavorite': false
+
+};
+
+export {AppRoute, AuthorizationStatus, SHOWING_FILMS_PER_STEP, TIMEOUT_SHOW_ERROR, APIRoute, NameSpace, HttpCode, DEFAULT_PROMO_FILM};

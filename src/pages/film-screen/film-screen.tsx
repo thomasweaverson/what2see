@@ -1,4 +1,4 @@
-import { useParams, Link} from 'react-router-dom';
+import { useParams, Link, useNavigate} from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 // import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -13,9 +13,11 @@ import Header from '../../components/header/header';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getCurrentFilm, getReviews, getSimilarFilms } from '../../store/app-data/selectors';
 import { fetchFilm, fetchReviews, fetchSimilarFilms } from '../../store/action';
+import MyListButton from '../../components/my-list-button/my-list-button';
 
 function FilmScreen() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const id = Number(useParams().id);
@@ -24,7 +26,10 @@ function FilmScreen() {
   const similarMovies = useAppSelector(getSimilarFilms);
   const reviews = useAppSelector(getReviews);
 
-  const myListIcon = film?.isFavorite ? {viewBox: '0 0 18 14', width: '18', height: '14', xlinkHref: '#in-list' } : {viewBox: '0 0 19 20', width: '19', height: '20', xlinkHref: '#add' };
+  const isFavorite = film?.isFavorite || false;
+  const handlePlayButtonClick = () => {
+    navigate(`${AppRoute.Player}/${id}`);
+  };
 
   useEffect(() => {
     dispatch(fetchFilm(id));
@@ -53,18 +58,14 @@ function FilmScreen() {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={handlePlayButtonClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox={myListIcon.viewBox} width={myListIcon.width} height={myListIcon.height}>
-                    <use xlinkHref={myListIcon.xlinkHref}></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton filmId={id} isFavorite={isFavorite} />
                 {isAuthorized &&
                 <Link to={`${AppRoute.Films}/${id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>}
               </div>

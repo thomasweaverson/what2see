@@ -4,19 +4,12 @@ import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logout } from '../../store/action';
 import { getAuthorizationStatus, getUserInfo } from '../../store/user-process/selectors';
-import { useEffect } from 'react';
 
 function UserBlock(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userInfo = useAppSelector(getUserInfo);
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('Header рендерится');
-  });
-
-
   const handleSignInOutClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     //@thws vVv эт неправильно

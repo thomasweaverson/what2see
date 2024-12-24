@@ -32,7 +32,7 @@ function App({promoMovie}: AppProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<Main promoMovie={promoMovie} />}
+          element={<Main />}
         />
         <Route
           path={AppRoute.MyList}
@@ -52,10 +52,10 @@ function App({promoMovie}: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.SignIn}
-          element={isAuthorized ? <Main promoMovie={promoMovie} /> : <SignIn />}
+          element={isAuthorized ? <Main /> : <SignIn />}
         />
         <Route
-          path={`films/:id${AppRoute.AddReview}`}
+          path={`${AppRoute.Films}/:id${AppRoute.AddReview}`}
           element={
             <PrivateRoute>
               <AddReview />

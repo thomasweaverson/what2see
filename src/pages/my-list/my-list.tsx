@@ -4,12 +4,11 @@ import Footer from '../../components/footer/footer';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
-import { getFilms } from '../../store/app-data/selectors';
+import { getFavoriteFilms } from '../../store/app-data/selectors';
 import FilmsList from '../../components/films-list/films-list';
 
 function MyList (): JSX.Element {
-  const films = useAppSelector(getFilms);
-  const favoriteFilms = films.filter((film) => film.isFavorite);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
   const isNoFilms = favoriteFilms.length === 0;
   return (
     <div className="user-page">

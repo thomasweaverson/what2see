@@ -2,7 +2,7 @@ import type { History } from 'history';
 import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
-import type { Film, Review } from '../types/types';
+import type { Film, PostFavoriteData, Review } from '../types/types';
 import type { AuthData } from '../types/auth-data';
 import { UserInfo } from '../types/user';
 
@@ -19,9 +19,12 @@ type Extra = {
 export const Action = {
   FETCH_FILMS: 'films/fetch',
   FETCH_FILM: 'film/fetch',
+  FETCH_PROMO_FILM: 'films/fetch-promo',
   FETCH_SIMILAR_FILMS: 'films/fetch-similar',
   FETCH_REVIEWS: 'film/fetch-reviews',
   ADD_REVIEW: 'review/add',
+  FETCH_FAVORITE_FILMS: 'films/fetch-favorite',
+  POST_FAVORITE_FILM: 'film/post-favorite',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
   CHECK_AUTH: 'user/check-auth',
@@ -55,6 +58,15 @@ export const fetchFilm = createAsyncThunk<Film, number, {extra: Extra}>(
   }
 );
 
+export const fetchPromoFilm = createAsyncThunk<Film, undefined, {extra: Extra}>(
+  Action.FETCH_PROMO_FILM,
+  async (_arg, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<Film>(APIRoute.Promo);
+    return data;
+  }
+);
+
 export const fetchSimilarFilms = createAsyncThunk<Film[], number, { extra: Extra}>(
   Action.FETCH_SIMILAR_FILMS,
   async (id, { extra }) => {
@@ -79,6 +91,34 @@ export const sendReview = createAsyncThunk<Review[], UserReview, { extra: Extra 
     const { api } = extra;
     const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
     return data;
+  }
+);
+
+export const fetchFavoriteFilms = createAsyncThunk<Film[], undefined, { extra: Extra }>(
+  Action.FETCH_FAVORITE_FILMS,
+  async (_arg, { extra }) => {
+    const { api } = extra;
+    const { data } = await api.get<Film[]>(APIRoute.Favorite);
+    return data;
+  }
+);
+
+export const postFavoriteFilm = createAsyncThunk<Film, PostFavoriteData, { extra: Extra }>(
+  Action.POST_FAVORITE_FILM,
+  async ({filmId, status}, { extra }) => {
+    const { api, history } = extra;
+
+    try {
+      const { data } = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === HttpCode.NoAuth) {
+        history.push(AppRoute.SignIn);
+      }
+
+      return Promise.reject(error);
+    }
   }
 );
 

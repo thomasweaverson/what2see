@@ -8,10 +8,15 @@ export type AppData = {
   isFilmsLoadingStatus: boolean;
   currentFilm: Film | null;
   isCurrentFilmLoadingStatus: boolean;
+  promoFilm: Film | null;
+  isPromoFilmLoadingStatus: boolean;
   reviews: Review[];
   isReviewsLoadingStatus: boolean;
   similarFilms: Film[];
   isSimilarFilmsLoadingStatus: boolean;
+  favoriteFilms: Film[];
+  isFavoriteFilmsLoadingStatus: boolean;
+  favoriteFilmsCount: number;
   genres: string[];
 }
 

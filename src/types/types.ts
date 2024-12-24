@@ -30,4 +30,9 @@ type Review = {
 
 };
 
-export type { Film, Review };
+type PostFavoriteData = {
+  filmId: number;
+  status: 1 | 0;
+};
+
+export type { Film, Review, PostFavoriteData };

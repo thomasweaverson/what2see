@@ -11,11 +11,19 @@ export const getIsFilmsLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State):
 export const getCurrentFilm = ({[NameSpace.AppData]: APP_DATA}: State): Film | null => APP_DATA.currentFilm;
 export const getIsCurrentFilmLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State): boolean => APP_DATA.isCurrentFilmLoadingStatus;
 
+export const getPromoFilm = ({[NameSpace.AppData]: APP_DATA}: State): Film | null => APP_DATA.promoFilm;
+export const getIsPromoFilmLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State): boolean => APP_DATA.isPromoFilmLoadingStatus;
+
 export const getReviews = ({[NameSpace.AppData]: APP_DATA}: State): Review[] => APP_DATA.reviews;
 export const getIsReviewsLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State): boolean => APP_DATA.isReviewsLoadingStatus;
 
 export const getSimilarFilms = ({[NameSpace.AppData]: APP_DATA}: State): Film[] => APP_DATA.similarFilms;
 export const getIsSimilarFilmsLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State): boolean => APP_DATA.isSimilarFilmsLoadingStatus;
+
+export const getFavoriteFilms = ({[NameSpace.AppData]: APP_DATA}: State): Film[] => APP_DATA.favoriteFilms;
+export const getIsFavoriteFilmsLoadingStatus = ({[NameSpace.AppData]: APP_DATA}: State): boolean => APP_DATA.isFavoriteFilmsLoadingStatus;
+
+export const getFavoriteFilmsCount = ({[NameSpace.AppData]: APP_DATA}: State): Film['id'] => APP_DATA.favoriteFilmsCount;
 
 export const getGenres = ({[NameSpace.AppData]: APP_DATA}: State): string[] => APP_DATA.genres;
 

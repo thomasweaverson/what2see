@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/what2see/static/css/main.6576ea61.css",
-    "main.js": "/what2see/static/js/main.72743494.js",
+    "main.js": "/what2see/static/js/main.a2abdd48.js",
     "index.html": "/what2see/index.html",
     "main.6576ea61.css.map": "/what2see/static/css/main.6576ea61.css.map",
-    "main.72743494.js.map": "/what2see/static/js/main.72743494.js.map"
+    "main.a2abdd48.js.map": "/what2see/static/js/main.a2abdd48.js.map"
   },
   "entrypoints": [
     "static/css/main.6576ea61.css",
-    "static/js/main.72743494.js"
+    "static/js/main.a2abdd48.js"
   ]
 }

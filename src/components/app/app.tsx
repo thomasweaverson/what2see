@@ -14,11 +14,13 @@ import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
+const basename = process.env.NODE_ENV === 'production' ? '/what2see' : '/';
+
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRouter basename={basename} history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}

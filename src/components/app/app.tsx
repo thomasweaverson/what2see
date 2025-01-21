@@ -14,17 +14,7 @@ import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
-type PromoMovieInfo = {
-  title: string;
-  genre: string;
-  year: number;
-}
-
-type AppProps = {
-  promoMovie: PromoMovieInfo;
-}
-
-function App({promoMovie}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   return (

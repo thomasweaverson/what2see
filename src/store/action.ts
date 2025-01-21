@@ -14,7 +14,7 @@ import { UserReview } from '../types/user';
 type Extra = {
   api: AxiosInstance;
   history: History;
-}
+};
 
 export const Action = {
   FETCH_FILMS: 'films/fetch',
@@ -40,12 +40,12 @@ export const fetchFilms = createAsyncThunk<Film[], undefined, { extra: Extra }>(
   }
 );
 
-export const fetchFilm = createAsyncThunk<Film, number, {extra: Extra}>(
+export const fetchFilm = createAsyncThunk<Film, number, { extra: Extra }>(
   Action.FETCH_FILM,
   async (id, { extra }) => {
     const { api, history } = extra;
     try {
-      const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
+      const { data } = await api.get<Film>(`${APIRoute.Films}/${id}`);
       return data;
     } catch (error) {
       const axiosError = error as AxiosError;
@@ -58,84 +58,100 @@ export const fetchFilm = createAsyncThunk<Film, number, {extra: Extra}>(
   }
 );
 
-export const fetchPromoFilm = createAsyncThunk<Film, undefined, {extra: Extra}>(
-  Action.FETCH_PROMO_FILM,
-  async (_arg, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<Film>(APIRoute.Promo);
+export const fetchPromoFilm = createAsyncThunk<
+  Film,
+  undefined,
+  { extra: Extra }
+>(Action.FETCH_PROMO_FILM, async (_arg, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<Film>(APIRoute.Promo);
+  return data;
+});
+
+export const fetchSimilarFilms = createAsyncThunk<
+  Film[],
+  number,
+  { extra: Extra }
+>(Action.FETCH_SIMILAR_FILMS, async (id, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
+  return data;
+});
+
+export const fetchReviews = createAsyncThunk<
+  Review[],
+  number,
+  { extra: Extra }
+>(Action.FETCH_REVIEWS, async (id, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+  return data;
+});
+
+export const sendReview = createAsyncThunk<
+  Review[],
+  UserReview,
+  { extra: Extra }
+>(Action.ADD_REVIEW, async ({ comment, rating, filmId }, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${filmId}`, {
+    comment,
+    rating,
+  });
+  return data;
+});
+
+export const fetchFavoriteFilms = createAsyncThunk<
+  Film[],
+  undefined,
+  { extra: Extra }
+>(Action.FETCH_FAVORITE_FILMS, async (_arg, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<Film[]>(APIRoute.Favorite);
+  return data;
+});
+
+export const postFavoriteFilm = createAsyncThunk<
+  Film,
+  PostFavoriteData,
+  { extra: Extra }
+>(Action.POST_FAVORITE_FILM, async ({ filmId, status }, { extra }) => {
+  const { api, history } = extra;
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    const { data } = await api.post<Film>(
+      `${APIRoute.Favorite}/${filmId}/${status}`
+    );
     return data;
-  }
-);
-
-export const fetchSimilarFilms = createAsyncThunk<Film[], number, { extra: Extra}>(
-  Action.FETCH_SIMILAR_FILMS,
-  async (id, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
-    return data;
-  }
-);
-
-export const fetchReviews = createAsyncThunk<Review[], number, { extra: Extra }>(
-  Action.FETCH_REVIEWS,
-  async (id, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
-    return data;
-  }
-);
-
-export const sendReview = createAsyncThunk<Review[], UserReview, { extra: Extra }>(
-  Action.ADD_REVIEW,
-  async ({comment, rating, filmId}, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
-    return data;
-  }
-);
-
-export const fetchFavoriteFilms = createAsyncThunk<Film[], undefined, { extra: Extra }>(
-  Action.FETCH_FAVORITE_FILMS,
-  async (_arg, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<Film[]>(APIRoute.Favorite);
-    return data;
-  }
-);
-
-export const postFavoriteFilm = createAsyncThunk<Film, PostFavoriteData, { extra: Extra }>(
-  Action.POST_FAVORITE_FILM,
-  async ({filmId, status}, { extra }) => {
-    const { api, history } = extra;
-
-    try {
-      const { data } = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
-      return data;
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response?.status === HttpCode.NoAuth) {
-        history.push(AppRoute.SignIn);
-      }
-
-      return Promise.reject(error);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response?.status === HttpCode.NoAuth) {
+      history.push(AppRoute.SignIn);
     }
-  }
-);
 
-export const checkAuth = createAsyncThunk<UserInfo, undefined,{ extra: Extra }>(
-  Action.CHECK_AUTH,
-  async (_arg, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<UserInfo>(APIRoute.Login);
-    return data;
+    return Promise.reject(error);
   }
-);
+});
+
+export const checkAuth = createAsyncThunk<
+  UserInfo,
+  undefined,
+  { extra: Extra }
+>(Action.CHECK_AUTH, async (_arg, { extra }) => {
+  const { api } = extra;
+  const { data } = await api.get<UserInfo>(APIRoute.Login);
+  return data;
+});
 
 export const login = createAsyncThunk<UserInfo, AuthData, { extra: Extra }>(
   Action.LOGIN,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<UserInfo>(APIRoute.Login, { email, password });
+    const { data } = await api.post<UserInfo>(APIRoute.Login, {
+      email,
+      password,
+    });
     const { token } = data;
     saveToken(token);
     history.push(AppRoute.Main);
